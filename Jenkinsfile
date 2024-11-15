@@ -30,6 +30,7 @@ pipeline {
             steps {
                 sh '''
                 echo "Test stage message"
+                test build/index.html
                 '''
             }
         }
