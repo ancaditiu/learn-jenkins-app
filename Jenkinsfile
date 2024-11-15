@@ -29,7 +29,7 @@ pipeline {
             }
             steps {
                 sh '''
-                echo 'Test stage message'
+                echo "Test stage message"
                 '''
             }
         }
