@@ -50,7 +50,8 @@ pipeline {
                     node_modules/.bin/serve -s build & # ampersant is added to run 
                     # the command in background so won't block the execution
                     sleep 10
-                    npx playwright test
+                    # npx playwright test
+                    npx playwright test --reporter=html
                 '''
             }
         }
