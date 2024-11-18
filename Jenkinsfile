@@ -20,9 +20,9 @@ pipeline {
         //         '''
         //     }
         // }
-        stage('Run Tests') {
+        stage('Tests') {
             parallel {
-                stage('Test'){
+                stage('Unit tests'){
                     agent {
                         docker {
                             image 'node:18-alpine'
@@ -35,6 +35,12 @@ pipeline {
                         test -f build/index.html
                         npm test
                         '''
+                    }
+                    post {
+                        always {
+                            // junit 'test-results/junit.xml'
+                            junit 'jest-results/junit.xml'
+                        }
                     }
                 }
                 stage('E2E'){
@@ -56,17 +62,23 @@ pipeline {
                             npx playwright test --reporter=html
                         '''
                     }
+                    post {
+                        always {
+                            // the following script was generated from jenkins -> go on the pipeline -> configure -> Pipeline Syntax and fill with desired configuration and press generate pipeline script
+                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                        }
+                    }
                 }
             }
          }
     }
 
-    post {
-        always {
-            // junit 'test-results/junit.xml'
-            junit 'jest-results/junit.xml'
-            // the following script was generated from jenkins -> go on the pipeline -> configure -> Pipeline Syntax and fill with desired configuration and press generate pipeline script
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-        }
-    }
+    // post {
+    //     always {
+    //         // junit 'test-results/junit.xml'
+    //         junit 'jest-results/junit.xml'
+    //         // the following script was generated from jenkins -> go on the pipeline -> configure -> Pipeline Syntax and fill with desired configuration and press generate pipeline script
+    //         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+    //     }
+    // }
 }
