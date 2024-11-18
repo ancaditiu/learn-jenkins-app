@@ -47,7 +47,9 @@ pipeline {
                     # npm install -g serve
                     npm install serve
                     # serve -s build
-                    node_modules/.bin/serve -s build
+                    node_modules/.bin/serve -s build & # ampersant is added to run 
+                    # the command in background so won't block the execution
+                    sleep 10
                     npx playwright test
                 '''
             }
