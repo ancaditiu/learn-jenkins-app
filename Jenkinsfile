@@ -61,6 +61,8 @@ pipeline {
         always {
             // junit 'test-results/junit.xml'
             junit 'jest-results/junit.xml'
+            // the following script was generated from jenkins -> go on the pipeline -> configure -> Pipeline Syntax and fill with desired configuration and press generate pipeline script
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
         }
     }
 }
