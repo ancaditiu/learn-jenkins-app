@@ -1,10 +1,10 @@
 pipeline {
     agent any
 
-    environment {
-        // NETLIFY_STIE_ID = '' // site id must be put in ''
-        // NETLIFY_AUTH_TOKEN = credentials('notify-token') // in the braces is the name of credentials from Jenkins
-    }
+    // environment {
+    //     // NETLIFY_STIE_ID = '' // site id must be put in ''
+    //     // NETLIFY_AUTH_TOKEN = credentials('notify-token') // in the braces is the name of credentials from Jenkins
+    // }
 
     stages {
         stage('Build') {
