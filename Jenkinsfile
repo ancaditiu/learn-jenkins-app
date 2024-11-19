@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        // NETLIFY_STIE_ID = '' // site id must be put in ''
+        // NETLIFY_AUTH_TOKEN = credentials('notify-token') // in the braces is the name of credentials from Jenkins
+    }
+
     stages {
         stage('Build') {
             agent {
@@ -71,8 +76,28 @@ pipeline {
                 }
             }
          }
+        stage('Deploy') {
+                agent {
+                    docker {
+                        image 'node:18-alpine'
+                        reuseNode true
+                    }
+                }
+                steps {
+                    sh '''
+                    echo "small change"
+                    # if I manage to do it with netlify:
+                    # npm install netlify-cli
+                    # node_modules/.bin/netlify --version
+                    # echo "Deplyiong to production Site ID: $NETLIFY_STIE_ID
+                    # node_modules/.bin/netlify status
+                    # node_modules/.bin/netlify deploy --dir=build --prod
+                    '''
+                }
+            }
+    
     }
-
+.
     // post {
     //     always {
     //         // junit 'test-results/junit.xml'
